@@ -7,6 +7,6 @@
  
 ## Sera implementado em C com um vetor de 10 posições.
 
- - [ ] Inplementar Filas
- - [ ] Inplementar Pilhas
- - [ ] Inplementar Lista
+ - [ ] Implementar Filas
+ - [ ] Implementar Pilhas
+ - [ ] Implementar Lista
