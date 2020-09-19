@@ -29,6 +29,7 @@ typedef struct
 void FormatarTexto(char texto[]);
 void iniciarLista(Lista *lista);
 
+
 void main(void)
 {
 	
@@ -46,15 +47,17 @@ void main(void)
 	int tipoID = 0;
 	char comando[MAX], tipo[3][6];
 	bool vasia;
-
+	
 	// isso aqui não poderia ser simplificado com apenas 
 	// tipo[3][6] = {"lista", "fila", "pilha"}; ?
 	strcpy(tipo[0], "lista");
 	strcpy(tipo[1], "fila");
 	strcpy(tipo[2], "pilha");
-
+	iniciarLista(lista);
+	
+	
 	// Aqui escolhemos se queremos lista, filas ou pilhas
-	printf("Escolha o tipo de organiza��o de dados que deseja montar: lista, fila e pilha\n");
+	printf("Escolha o tipo de organizasa��o de dados que deseja montar: lista, fila e pilha\n");
 	do
 	{
 		scanf("%s", comando);
@@ -63,36 +66,53 @@ void main(void)
 	} while (strcmp(comando, tipo[0]) && strcmp(comando, tipo[1]) && strcmp(comando, tipo[2]));
 
 	// Aqui definimos o em o que vamos trabalhar
-	if (!strcmp(comando, tipo[0]))
-	{ //entra e sai de qualquer lugar -> lista
-		printf("Uma lista\n");
+	if (!strcmp(comando, tipo[0])) {
+		//printf("Uma lista\n");
 		tipoID = 0;
 	}
-	else
-	{
-		if (!strcmp(comando, tipo[1]))
-		{ //entra no primeiro Indice e sai no ultimo indere�o -> fila
-			printf("Uma fila\n");
+	else {
+		if (!strcmp(comando, tipo[1])) {
+			//printf("Uma fila\n");
 			tipoID = 1;
 		}
-		else
-		{
-			if (!strcmp(comando, tipo[2]))
-			{ //entra e sai na mesma posi��o -> pilha
-				printf("Uma pilha\n");
+		else {
+			if (!strcmp(comando, tipo[2])) {
+				//printf("Uma pilha\n");
 				tipoID = 2;
 			}
 		}
 	}
 
-	// Aqui são as operações que o usuário pode fazer (transformar isso aqui em função ?)
-	printf("Escolha o comando para sua %s ou incerrar o programa: fim, incerção e exclusão\n", tipo[tipoID]);
+	// Aqui são as operações que o usuário pode fazer (transformar isso aqui em funs�o ?)
+	printf("Escolha o comando para sua %s ou incerre o programa: fim, inserir e excluir\n", tipo[tipoID]);
 	do
 	{
 		scanf("%s", comando);
 		FormatarTexto(comando);
 
-		// criar uma função que pegue o que o usuário quer
+		if(!strcmp(comando, "inserir")) {
+			/*switch(tipoID) {
+				case 0 : //colocar funsao que insira em lista aqui
+					break;
+				case 1 : //colocar funsao que insira em fila aqui
+					break;
+				case 2 : //colocar funsao que insira em pilha aqui
+					break;
+			}*/
+		}
+		else {
+			if(!strcmp(comando, "excluir")) {
+				/*switch(tipoID) {
+				case 0 : //colocar funsao que exclua em lista aqui
+					break;
+				case 1 : //colocar funsao que exclua em fila aqui
+					break;
+				case 2 : //colocar funsao que exclua em pilha aqui
+					break;
+				}*/
+			}	
+		}
+		
 
 	} while (strcmp(comando, "fim"));
 }
@@ -102,9 +122,9 @@ void main(void)
 	Aqui estão as funções do projeto-------------------------------------------------------------------------------
 */
 
-void Insercao(Lista *lista, Elemento *x, int cr)
+/*void Insercao(Lista *lista, Elemento *x, int cr)
 {
-	if (ListaCheia(lista) == 1)//lista chea seria?
+	if (ListaCheia(lista) == 1)//lista cheia seria?
 	{
 		cr = 4; // lista está cheia
 	}
@@ -123,7 +143,7 @@ void Insercao(Lista *lista, Elemento *x, int cr)
 
 		lista->numero++; // aqui acrescenta mais um numero na lista, para dizer quantos tem
 	}
-}
+}*/
 
 // transforma a palavra toda para letras minusculas para melhor tratamento das strings para comparasao
 
@@ -170,5 +190,19 @@ void buscar(Lista *lista,int buscado, char tipo[]) {
 		else
 			printf("O %i nao foi encontrado na %s.\n",buscado,tipo);//caso nao ache
 			
+	}
+}
+
+//apresenta lista, tabela e pilha
+void apresentarLista(Lista *lista,char tipo[]) {
+	if(checarLista(lista)) {
+		printf("Lista vazia!\n retorne as opi��es\n");
+	}
+	else {
+		for(lista->no=0; (lista->no<lista->final) ; lista->no++) {
+			if(lista->no==0)
+				printf("%s\n\n",tipo);//identifica o primeiro no e imprime um minbe�ario com o tipo sendo lista tabela ou pilha
+			printf("posi��o %i valor %i", lista->no, lista->elemento[lista->no].conteudo);
+		}
 	}
 }
