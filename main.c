@@ -24,21 +24,20 @@ typedef struct
 	int numero; // numero de elementos na lista
 
 	Elemento elemento[MAX];
-} Lista; //Não seria uma boa botar um nome mais generico como organisasao? lista parece que remete somente as listas
+} Lista; //Nï¿½o seria uma boa botar um nome mais generico como organisasao? lista parece que remete somente as listas
 
 void FormatarTexto(char texto[]);
 void iniciarLista(Lista *lista);
 
-
 void main(void)
 {
-	
-	setlocale(LC_ALL,"");
-	
+
+	setlocale(LC_ALL, "");
+
 	Lista *lista;
 	Elemento *w, *x;
 
-	int cr;// como iremos trabalhar com esse dado?
+	int cr; // como iremos trabalhar com esse dado?
 
 	lista = (Lista *)calloc(1, sizeof(Lista));
 	w = (Elemento *)calloc(1, sizeof(Elemento));
@@ -46,18 +45,17 @@ void main(void)
 
 	int tipoID = 0;
 	char comando[MAX], tipo[3][6];
-	bool vasia;
-	
-	// isso aqui nÃ£o poderia ser simplificado com apenas 
+	bool vazia;
+
+	// isso aqui nÃ£o poderia ser simplificado com apenas
 	// tipo[3][6] = {"lista", "fila", "pilha"}; ?
 	strcpy(tipo[0], "lista");
 	strcpy(tipo[1], "fila");
 	strcpy(tipo[2], "pilha");
 	iniciarLista(lista);
-	
-	
+
 	// Aqui escolhemos se queremos lista, filas ou pilhas
-	printf("Escolha o tipo de organizasação de dados que deseja montar: lista, fila e pilha\n");
+	printf("Escolha o tipo de organizasaï¿½ï¿½o de dados que deseja montar: lista, fila e pilha\n");
 	do
 	{
 		scanf("%s", comando);
@@ -66,31 +64,37 @@ void main(void)
 	} while (strcmp(comando, tipo[0]) && strcmp(comando, tipo[1]) && strcmp(comando, tipo[2]));
 
 	// Aqui definimos o em o que vamos trabalhar
-	if (!strcmp(comando, tipo[0])) {
+	if (!strcmp(comando, tipo[0]))
+	{
 		//printf("Uma lista\n");
 		tipoID = 0;
 	}
-	else {
-		if (!strcmp(comando, tipo[1])) {
+	else
+	{
+		if (!strcmp(comando, tipo[1]))
+		{
 			//printf("Uma fila\n");
 			tipoID = 1;
 		}
-		else {
-			if (!strcmp(comando, tipo[2])) {
+		else
+		{
+			if (!strcmp(comando, tipo[2]))
+			{
 				//printf("Uma pilha\n");
 				tipoID = 2;
 			}
 		}
 	}
 
-	// Aqui sÃ£o as operaÃ§Ãµes que o usuÃ¡rio pode fazer (transformar isso aqui em funsão ?)
+	// Aqui sÃ£o as operaÃ§Ãµes que o usuÃ¡rio pode fazer (transformar isso aqui em funsï¿½o ?)
 	printf("Escolha o comando para sua %s ou incerre o programa: fim, inserir e excluir\n", tipo[tipoID]);
 	do
 	{
 		scanf("%s", comando);
 		FormatarTexto(comando);
 
-		if(!strcmp(comando, "inserir")) {
+		if (!strcmp(comando, "inserir"))
+		{
 			/*switch(tipoID) {
 				case 0 : //colocar funsao que insira em lista aqui
 					break;
@@ -100,8 +104,10 @@ void main(void)
 					break;
 			}*/
 		}
-		else {
-			if(!strcmp(comando, "excluir")) {
+		else
+		{
+			if (!strcmp(comando, "excluir"))
+			{
 				/*switch(tipoID) {
 				case 0 : //colocar funsao que exclua em lista aqui
 					break;
@@ -110,19 +116,17 @@ void main(void)
 				case 2 : //colocar funsao que exclua em pilha aqui
 					break;
 				}*/
-			}	
+			}
 		}
-		
 
 	} while (strcmp(comando, "fim"));
 }
-
 
 /*
 	Aqui estÃ£o as funÃ§Ãµes do projeto-------------------------------------------------------------------------------
 */
 
-/*void Insercao(Lista *lista, Elemento *x, int cr)
+void Insercao(Lista *lista, Elemento *x, int cr)
 {
 	if (ListaCheia(lista) == 1)//lista cheia seria?
 	{
@@ -143,7 +147,7 @@ void main(void)
 
 		lista->numero++; // aqui acrescenta mais um numero na lista, para dizer quantos tem
 	}
-}*/
+}
 
 // transforma a palavra toda para letras minusculas para melhor tratamento das strings para comparasao
 
@@ -158,7 +162,7 @@ void FormatarTexto(char texto[])
 	}
 }
 
-// inicia uma lista 
+// inicia uma lista
 void iniciarLista(Lista *lista)
 {
 	lista->inicio = 0;
@@ -168,41 +172,55 @@ void iniciarLista(Lista *lista)
 }
 
 //checar se a lista esta vazia
-bool checarLista(Lista *lista) {// estou pensando nessa função talvez ela seja muito desnessesaria
-	return (lista->final==0) ? true : false;
+bool checarLista(Lista *lista)
+{ // estou pensando nessa funï¿½ï¿½o talvez ela seja muito desnessesaria
+	return (lista->final == 0) ? true : false;
 }
 
-//função que realiza a busca do ta lista,tabela e pilha
-void buscar(Lista *lista,int buscado, char tipo[]) {
+bool ListaCheia(Lista *lista)
+{ // estou pensando nessa funï¿½ï¿½o talvez ela seja muito desnessesaria
+	return (lista->final == 0) ? true : false;
+}
+
+//funï¿½ï¿½o que realiza a busca do ta lista,tabela e pilha
+void buscar(Lista *lista, int buscado, char tipo[])
+{
 	bool acho = false;
-	
-	if(checarLista(lista)) {
-		printf("Lista vazia!\n retorne as opições\n");
+
+	if (checarLista(lista))
+	{
+		printf("Lista vazia!\n retorne as opiï¿½ï¿½es\n");
 	}
-	else {
-		for(lista->no=0; (lista->no<lista->final) && !acho == false ; lista->no++) {//eplicando esse for que pode esta um pouco confuso que vai fazer de I ate o final atual na lista ate ele ve se achou ou não a posição quebrando o laço
-			if(lista->elemento[lista->no].conteudo == buscado) {//verifica se e igual ao valor buscado
+	else
+	{
+		for (lista->no = 0; (lista->no < lista->final) && acho == false; lista->no++)
+		{ //eplicando esse for que pode esta um pouco confuso que vai fazer de I ate o final atual na lista ate ele ve se achou ou nï¿½o a posiï¿½ï¿½o quebrando o laï¿½o
+			if (lista->elemento[lista->no].conteudo == buscado)
+			{ //verifica se e igual ao valor buscado
 				acho = true;
 			}
 		}
-		if(acho)
-			printf("O %i foi encontrado na posição %i na sua %s.\n",buscado, lista->no,tipo);//caso ache
+		if (acho)
+			printf("O %i foi encontrado na posiï¿½ï¿½o %i na sua %s.\n", buscado, lista->no, tipo); //caso ache
 		else
-			printf("O %i nao foi encontrado na %s.\n",buscado,tipo);//caso nao ache
-			
+			printf("O %i nao foi encontrado na %s.\n", buscado, tipo); //caso nao ache
 	}
 }
 
 //apresenta lista, tabela e pilha
-void apresentarLista(Lista *lista,char tipo[]) {
-	if(checarLista(lista)) {
-		printf("Lista vazia!\n retorne as opições\n");
+void apresentarLista(Lista *lista, char tipo[])
+{
+	if (checarLista(lista))
+	{
+		printf("Lista vazia!\n retorne as opiï¿½ï¿½es\n");
 	}
-	else {
-		for(lista->no=0; (lista->no<lista->final) ; lista->no++) {
-			if(lista->no==0)
-				printf("%s\n\n",tipo);//identifica o primeiro no e imprime um minbeçario com o tipo sendo lista tabela ou pilha
-			printf("posição %i valor %i", lista->no, lista->elemento[lista->no].conteudo);
+	else
+	{
+		for (lista->no = 0; (lista->no < lista->final); lista->no++)
+		{
+			if (lista->no == 0)
+				printf("%s\n\n", tipo); //identifica o primeiro no e imprime um minbeï¿½ario com o tipo sendo lista tabela ou pilha
+			printf("posiï¿½ï¿½o %i valor %i", lista->no, lista->elemento[lista->no].conteudo);
 		}
 	}
 }
