@@ -8,29 +8,20 @@
 
 typedef struct
 {
-	int chave;
-} Chave;
-typedef struct
-{
-	Chave chave;
-
-	int conteudo;
-} Elemento;
-typedef struct
-{
 	int inicio; // inicio da lista
 	int final;	// Final da lista
 	int no;		// posisao atual de busca do vetor
-	int numero; // numero de elementos na lista
+	int elemento[MAX]; //armazenamento das variaveis
 
-	Elemento elemento[MAX];
-} Lista; //N�o seria uma boa botar um nome mais generico como organisasao? lista parece que remete somente as listas
+} Lista;
 
-bool ListaCheia(Lista *list);
 void FormatarTexto(char texto[]);
-void iniciarLista(Lista *lista);
-void ApresentarLista(Lista *lista, char tipo[]);
-void Insercao(Lista *lista, Elemento *x, int cr, char texto[]);
+void Iniciar(Lista *lista);
+void Remover(Lista *lista);
+void Apresentar(Lista *lista, char tipo[]);
+void InsercaoLista(Lista *lista, char tipo[],int num);
+void bubbleSort(int prt_num[], int max);
+
 
 void main(void)
 {
@@ -38,51 +29,36 @@ void main(void)
 	setlocale(LC_ALL, "");
 
 	Lista *lista;
-	Elemento *w, *x;
-
-	int cr; // como iremos trabalhar com esse dado?
 
 	lista = (Lista *)calloc(1, sizeof(Lista));
-	w = (Elemento *)calloc(1, sizeof(Elemento));
-	x = (Elemento *)calloc(1, sizeof(Elemento));
 
-	int tipoID = 0;
+	int tipoID,num;
 	char comando[MAX], tipo[3][6];
-	bool vazia;
 
-	// isso aqui não poderia ser simplificado com apenas
-	// tipo[3][6] = {"lista", "fila", "pilha"}; ?
 	strcpy(tipo[0], "lista");
 	strcpy(tipo[1], "fila");
 	strcpy(tipo[2], "pilha");
-	iniciarLista(lista);
-
+	Iniciar(lista);
+	
 	// Aqui escolhemos se queremos lista, filas ou pilhas
 	printf("Escolha o tipo de organizaca��o de dados que deseja montar: lista, fila e pilha\n");
-	do
-	{
+	do {
 		scanf("%s", comando);
 		FormatarTexto(comando);
 
 	} while (strcmp(comando, tipo[0]) && strcmp(comando, tipo[1]) && strcmp(comando, tipo[2]));
 
-	// Aqui definimos o em o que vamos trabalhar
-	if (!strcmp(comando, tipo[0]))
-	{
+	if (!strcmp(comando, tipo[0])) {
 		//printf("Uma lista\n");
 		tipoID = 0;
 	}
-	else
-	{
-		if (!strcmp(comando, tipo[1]))
-		{
+	else {
+		if (!strcmp(comando, tipo[1])) {
 			//printf("Uma fila\n");
 			tipoID = 1;
 		}
-		else
-		{
-			if (!strcmp(comando, tipo[2]))
-			{
+		else {
+			if (!strcmp(comando, tipo[2])) {
 				//printf("Uma pilha\n");
 				tipoID = 2;
 			}
@@ -98,10 +74,12 @@ void main(void)
 
 		if (!strcmp(comando, "inserir"))
 		{
+			printf("digite o valor que deseja inserir:\n");
+			scanf("%i",&num);
 			switch (tipoID)
 			{
 			case 0:
-				Insercao(lista, x, cr, tipo[tipoID]);
+				InsercaoLista(lista,tipo[tipoID],num);
 				break;
 				/*case 1 : //colocar funsao que insira em fila aqui
 					break;
@@ -113,17 +91,21 @@ void main(void)
 		{
 			if (!strcmp(comando, "excluir"))
 			{
-				/*switch(tipoID) {
-				case 0 : //colocar funsao que exclua em lista aqui
+				printf("digite o valor que deseja excluir\n");
+				scanf("%i",&num);
+				switch(tipoID) {
+				case 0 : deletarLista(lista,tipo[tipoID],num);
 					break;
-				case 1 : //colocar funsao que exclua em fila aqui
+			/*	case 1 : //colocar funsao que exclua em fila aqui
 					break;
 				case 2 : //colocar funsao que exclua em pilha aqui
-					break;
-				}*/
+					break;*/
+				}
 			}
 		}
-
+	
+	Apresentar(lista,tipo[tipoID]);
+	
 	} while (strcmp(comando, "fim"));
 }
 
@@ -131,39 +113,66 @@ void main(void)
 	Aqui estão as funções do projeto-------------------------------------------------------------------------------
 */
 
-<<<<<<< Updated upstream
-bool ListaCheia(Lista *lista)
-=======
-void Incerir(Lista *lista, Elemento *x, int cr)
->>>>>>> Stashed changes
-{
-	return (lista->final == MAX) ? true : false;
+bool Cheia(Lista *lista) {
+	return (lista->final == MAX-1) ? true : false;
 }
 
-void Insercao(Lista *lista, Elemento *x, int cr, char texto[])
-{
-	if (ListaCheia(lista)) //lista cheia seria?
-	{
-		cr = 4; // lista está cheia
-		printf("A lista está cheia\n");
+//checar se a lista esta vazia
+bool Vazio(Lista *lista) {
+	return (lista->final == -1) ? true : false;
+}
+
+// inicia uma lista
+void Iniciar(Lista *lista) {
+	lista->inicio = 0;
+	lista->final = -1;
+	lista->no = 0;
+}
+
+void InsercaoLista(Lista *lista, char tipo[],int num) {
+	if (Cheia(lista)) {
+		printf("A lista esta cheia nao pode ser inserido nenhum valor\n");
 	}
-	else
-	{
-		cr = 0; // significa que a lista está vazia
+	else {	
+		lista->final++;							  
+		lista->elemento[lista->final] = num;		  
+			
+		bubbleSort(lista->elemento,lista->final);
+	}
+}
 
-		lista->final += 1;									  // o final da lista vai ser acrescentado mais um
-		lista->elemento[lista->final].chave = x->chave;		  // aqui esse elemento recebe essa chave
-		lista->elemento[lista->final].conteudo = x->conteudo; // aqui esse elemento recebe esse conteudo
-
-		if (lista->numero == 0) // se não tiver nenhum número na lista, o inicio vai receber o fim.
-		{
-			lista->inicio = lista->final;
+void deletarLista(Lista *lista, char tipo[],int num) {
+	bool acho = false;
+	
+	if (Vazio(lista)) {
+		printf("A %s esta vazia nao pode ser deletado nenhum valor\n",tipo);
+	}
+	else {	
+		for (lista->no = 0; (lista->no <= lista->final) && acho == false; lista->no++) {
+			if (lista->elemento[lista->no] == num) {
+				acho = true;
+				
+			}
 		}
-
-		lista->numero++; // aqui acrescenta mais um numero na lista, para dizer quantos tem
+		if(acho) {
+			Remover(lista);
+			lista->final--;
+		}
+		else
+			printf("N�o encontado\n");
+		
 	}
 }
 
+void Remover(Lista *lista) {
+	
+	while(lista->no<=lista->final) {
+		lista->elemento[lista->no-1] = lista->elemento[lista->no];
+		printf("posisao %i valor %i\n", lista->no, lista->elemento[lista->no]);
+		printf("-1 posisao %i valor %i\n", lista->no-1, lista->elemento[lista->no-1]);
+		lista->no++;
+	}
+}
 // transforma a palavra toda para letras minusculas para melhor tratamento das strings para comparasao
 
 void FormatarTexto(char texto[])
@@ -171,78 +180,46 @@ void FormatarTexto(char texto[])
 	int quant = strlen(texto);
 	int letra;
 
-	for (letra = 0; letra < quant; letra++)
-	{
+	for (letra = 0; letra < quant; letra++) {
 		texto[letra] = tolower(texto[letra]);
 	}
 }
 
-// inicia uma lista
-void Inciar(Lista *lista)
-{
-	lista->inicio = 0;
-	lista->final = 0;
-	lista->no = 0;
-	lista->numero = 0;
-}
-
-//checar se a lista esta vazia
-bool ChecarSeEstaVazia(Lista *lista)
-{ // estou pensando nessa fun��o talvez ela seja muito desnessesaria
-	return (lista->final == 0) ? true : false;
-}
-
-<<<<<<< Updated upstream
-=======
-bool ChecarSeEstaCheia(Lista *lista)
-{ // estou pensando nessa fun��o talvez ela seja muito desnessesaria
-	return (lista->final == 0) ? true : false;
-}
-
->>>>>>> Stashed changes
-//fun��o que realiza a busca do ta lista,tabela e pilha
-void Buscar(Lista *lista, int buscado, char tipo[])
-{
-	bool acho = false;
-
-	if (checarLista(lista))
-	{
-		printf("Lista vazia!\n retorne as opi��es\n");
-	}
-	else
-	{
-		for (lista->no = 0; (lista->no < lista->final) && acho == false; lista->no++)
-		{ //eplicando esse for que pode esta um pouco confuso que vai fazer de I ate o final atual na lista ate ele ve se achou ou n�o a posi��o quebrando o la�o
-			if (lista->elemento[lista->no].conteudo == buscado)
-			{ //verifica se e igual ao valor buscado
-				acho = true;
-			}
-		}
-		if (acho)
-			printf("O %i foi encontrado na posi��o %i na sua %s.\n", buscado, lista->no, tipo); //caso ache
-		else
-			printf("O %i nao foi encontrado na %s.\n", buscado, tipo); //caso nao ache
-	}
-}
-
 //apresenta lista, tabela e pilha
-<<<<<<< Updated upstream
-void ApresentarLista(Lista *lista, char tipo[])
-=======
 void Apresentar(Lista *lista, char tipo[])
->>>>>>> Stashed changes
 {
-	if (checarLista(lista))
-	{
-		printf("Lista vazia!\n retorne as opi��es\n");
+	if (Vazio(lista)) {
+		printf("Lista vazia!\n retorne as opisoes\n");
 	}
 	else
 	{
-		for (lista->no = 0; (lista->no < lista->final); lista->no++)
+		for (lista->no = 0; (lista->no <= lista->final); lista->no++)
 		{
 			if (lista->no == 0)
-				printf("%s\n\n", tipo); //identifica o primeiro no e imprime um minbe�ario com o tipo sendo lista tabela ou pilha
-			printf("posi��o %i valor %i", lista->no, lista->elemento[lista->no].conteudo);
+				printf("\t%s\n\n", tipo);
+			printf("posisao %i valor %i\n", lista->no, lista->elemento[lista->no]);
 		}
 	}
+}
+
+void bubbleSort(int prt_num[], int max) {
+	int i,j=0,aux;
+	bool troca = true;
+	
+	while(troca) {
+		troca=false;
+		
+		for(i=0;i<max-j;i++) {
+			if(prt_num[i]>prt_num[i+1]) {
+			
+				aux = prt_num[i];
+				prt_num[i] = prt_num[i+1];
+				prt_num[i+1] = aux;
+				
+				troca=true;
+			}
+		}
+		j++;
+	}
+	
 }
