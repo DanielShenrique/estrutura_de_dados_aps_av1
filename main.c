@@ -131,7 +131,11 @@ void main(void)
 	Aqui estão as funções do projeto-------------------------------------------------------------------------------
 */
 
+<<<<<<< Updated upstream
 bool ListaCheia(Lista *lista)
+=======
+void Incerir(Lista *lista, Elemento *x, int cr)
+>>>>>>> Stashed changes
 {
 	return (lista->final == MAX) ? true : false;
 }
@@ -174,7 +178,7 @@ void FormatarTexto(char texto[])
 }
 
 // inicia uma lista
-void iniciarLista(Lista *lista)
+void Inciar(Lista *lista)
 {
 	lista->inicio = 0;
 	lista->final = 0;
@@ -183,13 +187,21 @@ void iniciarLista(Lista *lista)
 }
 
 //checar se a lista esta vazia
-bool checarLista(Lista *lista)
+bool ChecarSeEstaVazia(Lista *lista)
 { // estou pensando nessa fun��o talvez ela seja muito desnessesaria
 	return (lista->final == 0) ? true : false;
 }
 
+<<<<<<< Updated upstream
+=======
+bool ChecarSeEstaCheia(Lista *lista)
+{ // estou pensando nessa fun��o talvez ela seja muito desnessesaria
+	return (lista->final == 0) ? true : false;
+}
+
+>>>>>>> Stashed changes
 //fun��o que realiza a busca do ta lista,tabela e pilha
-void buscar(Lista *lista, int buscado, char tipo[])
+void Buscar(Lista *lista, int buscado, char tipo[])
 {
 	bool acho = false;
 
@@ -214,7 +226,11 @@ void buscar(Lista *lista, int buscado, char tipo[])
 }
 
 //apresenta lista, tabela e pilha
+<<<<<<< Updated upstream
 void ApresentarLista(Lista *lista, char tipo[])
+=======
+void Apresentar(Lista *lista, char tipo[])
+>>>>>>> Stashed changes
 {
 	if (checarLista(lista))
 	{
