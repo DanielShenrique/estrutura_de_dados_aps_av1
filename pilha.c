@@ -28,15 +28,44 @@ int VerificarSeEstaVazio(Pilha *pilha, int vazia);
 int VerificarSeEstaCheia(Pilha *pilha, int cheia);
 void Inserir(Pilha *pilha, int valor, int chave);
 void Exluir(Pilha *pilha);
+void MostrarAPilha(Pilha *pilha);
 
 int main(int argc, char const *argv[])
 {
-    int valor, chave;
+    int valor, chave, escolher;
 
     Pilha *pilha;
     pilha = (Pilha *)calloc(1, sizeof(Pilha));
 
     //TODO:fazer depois as regras de negocio
+
+    do
+    {
+        printf("Escolha a operacao.\n");
+        scanf("%d", &escolher);
+
+        switch (escolher)
+        {
+        case 1:
+            VerificarSeEstaVazio(pilha, pilha->vazia);
+            break;
+        case 2:
+            VerificarSeEstaCheia(pilha, pilha->cheia);
+            break;
+        case 3:
+            Inserir(pilha, valor, chave);
+            break;
+        case 4:
+            Exluir(pilha);
+            break;
+        case 5:
+            MostrarAPilha(pilha);
+            break;
+
+        default:
+            break;
+        }
+    } while (escolher != 9999);
 
     system("Pause");
     return 0;
@@ -110,5 +139,16 @@ void Exluir(Pilha *pilha)
 
         pilha->final--;
         pilha->quantidadeNumeros--;
+    }
+}
+
+void MostrarAPilha(Pilha *pilha)
+{
+    int i;
+
+    for (i = 0; i < pilha->final; i++)
+    {
+        printf("Conteudo: %d\n", pilha->elemento[i].conteudo);
+        printf("Indice: %d\n", pilha->elemento[i].chave.indice);
     }
 }
